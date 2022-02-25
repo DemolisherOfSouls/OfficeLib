@@ -4,9 +4,9 @@ Option Compare Text
 Option Base 1
 
 'Date Function Library
+'Version 1.1.0
 
 Public Const DTToday As Integer = -2
-Public Const DTError = CVErr(xlErrValue)
 Public Const vbSaturday2 As Integer = 0
 
 Public Function IsThisWeek(ByVal datenumber, Optional ByVal startday As Integer = vbMonday) As Boolean
@@ -17,7 +17,7 @@ Public Function IsThisWeek(ByVal datenumber, Optional ByVal startday As Integer 
 Exit Function
   
 Invalid:
-  IsThisWeek = DTError
+  IsThisWeek = CVErr(xlErrValue)
 End Function
 
 
@@ -30,7 +30,7 @@ Public Function DayCode(Optional ByVal datenumber = DTToday, Optional ByVal Base
 Exit Function
   
 Invalid:
-  DayCode = DTError
+  DayCode = CVErr(xlErrValue)
 End Function
 
 Public Function WeekStart(Optional ByVal datenumber = DTToday, Optional ByVal startday As Integer = vbMonday) As Date
@@ -42,7 +42,7 @@ Public Function WeekStart(Optional ByVal datenumber = DTToday, Optional ByVal st
 Exit Function
   
 Invalid:
-  WeekStart = DTError
+  WeekStart = CVErr(xlErrValue)
 End Function
 
 Public Function WeekFrom(ByVal datenumber, Optional ByVal todatenumber = DTToday, Optional ByVal startday = vbMonday, Optional ByVal base1index As Boolean = False) As Integer
@@ -54,7 +54,7 @@ Public Function WeekFrom(ByVal datenumber, Optional ByVal todatenumber = DTToday
 Exit Function
   
 Invalid:
-  WeekFrom = DTError
+  WeekFrom = CVErr(xlErrValue)
 End Function
 
 Public Function DayStr(Optional ByVal datenumber = DTToday) As String
@@ -66,7 +66,7 @@ Public Function DayStr(Optional ByVal datenumber = DTToday) As String
 Exit Function
   
 Invalid:
-  DayStr = DTError
+  DayStr = CVErr(xlErrValue)
 End Function
 
 Public Function YearStart(Optional ByVal datenumber = DTToday) As Date
@@ -78,6 +78,6 @@ Public Function YearStart(Optional ByVal datenumber = DTToday) As Date
 Exit Function
   
 Invalid:
-  YearStart = DTError
+  YearStart = CVErr(xlErrValue)
 End Function
 

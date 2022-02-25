@@ -4,11 +4,14 @@ Option Compare Text
 Option Base 1
 
 'RegExp Function Library
+'Version 1.0.2
+
+'Imports
+'Microsoft VBScript Regular Expressions 5.5
 
 Private RegExO As New RegExp
 
-Public Function RegExTest(ByVal Source As String, ByVal p As String, Optional ByVal i As Integer = 0, Optional ByVal c As Integer = 0) As Boolean
-  
+Public Function RegExTest(ByVal Source As String, ByVal p As String, Optional ByVal i As Integer = 0, Optional ByVal C As Integer = 0) As Boolean
   
   With RegExO
     .IgnoreCase = True
@@ -54,16 +57,13 @@ Public Function RegExReplace(ByVal Source As String, ByVal p As String, ByVal Re
     .Global = True
     .MultiLine = True
     .Pattern = p
+    RegExReplace = .Replace(Source, ReplaceWith)
   End With
-
-  RegExReplace = RegExO.Replace(Source, ReplaceWith)
 
 End Function
 
-Public Function ParseFraction(ByVal s As String) As Double
+Public Function ParseFraction(ByVal S As String, Optional ByRef Out As Double) As Double
   On Error GoTo Invalid
-
-  Dim whole, upper, lower
   
   With RegExO
     .Global = True
@@ -71,17 +71,29 @@ Public Function ParseFraction(ByVal s As String) As Double
     .MultiLine = True
     .Pattern = "([\d\.]+)[  \-]+([\d\.]+)[\/\\  ]+([\d\.]+)"
   
-    With .Execute(s).Item(0).SubMatches
-      whole = .Item(0)
-      upper = .Item(1)
-      lower = .Item(2)
+    With .Execute(S).Item(0).SubMatches
+      Out = CDbl(.Item(1)) / CDbl(.Item(2)) + CInt(.Item(0))
     End With
   End With
   
-  ParseFraction = CDbl(upper) / CDbl(lower) + CInt(whole)
+  ParseFraction = Out
   
-  Exit Function
+Exit Function
+  
 Invalid:
+  Out = 0
   ParseFraction = CVErr(xlErrNum)
+End Function
+
+Public Function TryParseFraction(ByVal V) As Double
+
+  If IsNumeric(V) Or IsEmpty(V) Then
+    TryParseFraction = IIf(IsNumeric(V), CDbl(V), 0)
+    Exit Function
+  End If
   
+  Dim result: result = ParseFraction(CStr(V))
+  
+  TryParseFraction = IIf(IsError(result), 0, result)
+    
 End Function

@@ -4,6 +4,7 @@ Option Compare Text
 Option Base 1
 
 'Formula Builder Function Library
+'Version 1.0.0
 
 Private Const EQ As String = "="
 
@@ -79,7 +80,6 @@ Skip:
 Exit Sub
   
 Invalid:
-  Call ErrorMsg
-  
+  ErrorMsg
 End Sub
 

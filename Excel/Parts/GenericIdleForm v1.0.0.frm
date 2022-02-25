@@ -13,6 +13,14 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
+Option Explicit
+Option Compare Text
+Option Base 1
+
+'GenericIdleForm Form
+'Version 1.0.0
+
 Private Sub DismissButton_Click()
 
   AbortKick
