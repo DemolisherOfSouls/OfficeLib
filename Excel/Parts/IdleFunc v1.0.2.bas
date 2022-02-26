@@ -3,7 +3,7 @@ Option Explicit
 Option Compare Text
 Option Base 1
 
-'Idle Timer Function Library
+'`Idle Timer Function Library
 'Version 1.0.2
 
 'History
@@ -18,7 +18,7 @@ Private Stage      As String
 Private IDialog    As New GenericIdleForm
 Private Closed     As Boolean
 
-Private Const MaxIdle As Date = #12:10:00 AM# '10 minutes - After Warn Time
+Private Const MaxIdle As Date = #12:30:00 AM# '30 minutes - Kick
 Private Const PreIdle As Date = #12:20:00 AM# '20 minutes - Prompt Show
 
 Private Sub IdleWait(ByVal cancel as Boolean)
@@ -28,16 +28,10 @@ End Sub
 'Call This Subroutine to Activate the Idle Timer
 Public Sub SetIdleTimer()
   LastActive = Time
+  If WarnTime <> Empty Then IdleWait(true)
   Stage = "WarnExecute"
-  CancelTimer
   WarnTime = LastActive + PreIdle
   IdleWait(false)
-End Sub
-
-'Cancels the Timer
-Public Sub CancelTimer(Optional ByVal final As Boolean = False)
-  If WarnTime <> Empty Then IdleWait(true)
-  If final Then Closed = True
 End Sub
 
 'Call This Subroutine to Abort the prompt
@@ -48,7 +42,8 @@ Public Sub AbortKick(Optional ByVal reset As Boolean = True)
   If reset Then
     SetIdleTimer
   Else
-    CancelTimer
+    If WarnTime <> Empty Then IdleWait(true)
+    If final Then Closed = True
   End If
 End Sub
 
@@ -56,8 +51,8 @@ End Sub
 Private Sub WarnExecute()
   IDialog.Show False
   Stage = "KickExecute"
-  WarnTime = LastActive + PreIdle + MaxIdle
-  IdleWait(false)
+  WarnTime = LastActive + MaxIdle
+  IdleWait false
 End Sub
 
 'Execute Kick
@@ -69,5 +64,6 @@ Private Sub KickExecute()
     .ThisWorkbook.Close True
     .DisplayAlerts = True
   End With
-  CancelTimer True
+  IdleWait true
+  Closed = True
 End Sub
