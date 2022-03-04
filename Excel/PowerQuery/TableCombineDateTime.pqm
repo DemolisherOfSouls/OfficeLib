@@ -1,0 +1,6 @@
+(tb as table, dc as text, tc as text, optional dtc as text) as table => let
+    dtcol = if dtc is null then "DateTime" else dtc,
+    tb1 = Table.TransformColumnTypes(tb,{{tc, type time}, {dc, type date}}),
+    tb2 = Table.CombineColumnsToRecord(tb1, dtcol, {tc, dc} ),
+    tb3 = Table.TransformColumns(tb2, { {dtcol, each CombineDateTime(Record.Field(_,dc), Record.Field(_,tc)), type datetime} })
+in tb3

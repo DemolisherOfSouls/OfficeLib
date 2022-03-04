@@ -1,0 +1,5 @@
+(name as text, row as number, col as number) as text => let
+    tab = Excel.CurrentWorkbook(){[Name=name]}[Content],
+    cln = Table.ColumnNames(tab){col},
+    val = Table.Column(tab, cln){row}
+in val

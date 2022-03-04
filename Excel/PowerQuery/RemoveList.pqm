@@ -1,0 +1,7 @@
+ (str as text, chk as list) as text => let
+    post = Text.Replace(str, List.Last(chk), ""),
+    shortlist = List.RemoveLastN(chk, 1),
+    operation = if not List.IsEmpty(shortlist)
+                then RemoveList(post, shortlist)
+                else post
+in Text.Trim(operation)

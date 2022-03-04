@@ -1,0 +1,8 @@
+(str as text, chk as list, optional num as number) as number => let
+    thischeck = Text.Contains(str, List.Last(chk), Comparer.OrdinalIgnoreCase),
+    nonullnum = if num is number then num else 0,
+    allchecks = nonullnum + Int64.From(thischeck),
+    shortlist = List.RemoveLastN(chk, 1),
+    keepcheck = not List.IsEmpty(shortlist),
+    operation = if keepcheck then CheckList(str, shortlist, allchecks) else allchecks
+in operation

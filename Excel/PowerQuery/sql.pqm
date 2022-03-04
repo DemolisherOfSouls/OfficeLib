@@ -1,0 +1,50 @@
+//SQL Query Builder
+(select as any, from as text, schema as text, wheres as any, server as text, database as text) as any => let
+
+    isSelectList = select is list,
+    isSelectText = select is text,
+    isWheresList = wheres is list,
+    isWheresText = wheres is text,
+
+    qt = (s as text) as text => "'" & s & "'",
+
+    selectText = "SELECT " & (
+        if isSelectText and Text.Length(select) > 0 then select else
+        if isSelectList then Lines.ToText( List.Transform(select, each let
+            olNam = qt(_{0}),
+            nuNam = qt(_{1}),
+            nuTyp = qt(_{2}),
+            count = List.Count(_),
+            isEntryList = _ is list,
+            isEntryText = _ is text,
+            formattedEntry =
+                if isEntryList and count = 3 then "CONVERT(" & olNam & ", " & nuTyp & ") AS " & nuNam else
+                if isEntryList and count = 2 then olNam & " AS " & nuNam  else
+                if isEntryList and count = 1 then olNam else 
+                if isEntryText and Text.Length(_) > 0 then _ else null
+    in formattedEntry), ", ") else "*"),
+
+    fromText = " FROM " & qt(schema & "." & from),
+
+    wheretext =
+        if isWheresText and Text.Length(wheres) > 0 then " WHERE " & wheres else
+        if isWheresList then " WHERE " & Lines.ToText( List.Transform(wheres, each let
+            olNam = qt(_{0}),
+            value = qt(_{1}),
+            eqOpr = qt(_{2}),
+            count = List.Count(_),
+            isEntryList = _ is list,
+            isEntryText = _ is text,
+            formattedEntry =
+                if isEntryList and count = 3 then olNam & " " & eqOpr & " " & value else
+                if isEntryList and count = 2 then olNam & " = " & value else
+                if isEntryList and count = 1 then olNam else 
+                if isEntryText and Text.Length(_) > 2 then _ else null
+        in formattedEntry), " AND ") else "",
+
+
+    assembled = selectText & fromText & wheretext,
+
+    SQLStart = Sql.Database(server, database)
+    
+in assembled

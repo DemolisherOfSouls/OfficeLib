@@ -1,0 +1,5 @@
+= (name as text) as any => let
+    x1 = Excel.CurrentWorkbook(){[Name=name]}[Content],
+    x2 = Record.FieldNames(x1{0}){0},
+    x3 = Table.Column(x1, x2){0}
+in x3

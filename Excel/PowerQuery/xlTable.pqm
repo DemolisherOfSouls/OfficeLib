@@ -1,0 +1,1 @@
+(name as text) as table => Excel.CurrentWorkbook(){[Name=name]}[Content]

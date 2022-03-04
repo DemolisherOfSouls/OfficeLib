@@ -1,0 +1,12 @@
+(d as any, t as any) as datetime => let
+    dn = if d is date then Number.From(d)
+        else if d is number then d
+        else if d is text then Number.From(Date.FromText(d))
+        else Number.From(DateTime.Date(DateTime.LocalNow())),
+    tn = if t is time then Number.From(t)
+        else if t is number then t
+        else if t is text then Number.From(Time.FromText(t))
+        else Number.From(DateTime.Time(DateTime.LocalNow())),
+    ad = dn + tn,
+    dt = DateTime.From(ad)
+in dt

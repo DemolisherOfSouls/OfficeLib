@@ -1,0 +1,1 @@
+= (r as text) as list => List.Repeat( { r }, 2 )

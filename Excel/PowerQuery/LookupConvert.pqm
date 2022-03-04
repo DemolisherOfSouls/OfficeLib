@@ -1,0 +1,7 @@
+//LookupConvert
+(id as any, looktab as table, idcol as text, lookcol as text) as any => let
+    t0 = Table.SelectColumns(looktab, {idcol, lookcol}),
+    t1 = Table.FromValue(id),
+    t2 = Table.Join(t0, idcol, t1, "Value", JoinKind.Inner),
+    t3 = Table.Column(t2, lookcol){0}
+in t3
