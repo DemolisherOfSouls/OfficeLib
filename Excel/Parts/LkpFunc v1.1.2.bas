@@ -8,7 +8,7 @@ Option Base 1
 
 
 
-'Current'
+'Current
 
 Public Function XLIntersect(ByVal R1, ByVal R2)
   XLIntersect = Intersect(R1, R2)

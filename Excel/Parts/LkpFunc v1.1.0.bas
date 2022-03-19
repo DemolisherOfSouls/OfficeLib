@@ -6,6 +6,8 @@ Option Base 1
 'Lookup Function Library
 'Version 1.1.0
 
+'Current
+
 Public Function XLIntersect(ByVal r1, ByVal r2)
   XLIntersect = Intersect(r1, r2)
 End Function

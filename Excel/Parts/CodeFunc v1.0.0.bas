@@ -6,6 +6,8 @@ Option Base 1
 'Formula Builder Function Library
 'Version 1.0.0
 
+'Current
+
 Private Const EQ As String = "="
 
 Private Const BLK_IfError As String = "IFERROR("

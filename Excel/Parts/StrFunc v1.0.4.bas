@@ -6,6 +6,8 @@ Option Base 1
 'String Function Library
 'Version 1.0.4
 
+'Current
+
 Private Const NoParam = "@@@@@"
 
 'Text Analysis

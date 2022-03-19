@@ -9,6 +9,8 @@ Option Base 1
 'Imports
 'Microsoft VBScript Regular Expressions 5.5
 
+'Current
+
 Private Const EQ As String = "="
 
 Private Const BLK_IfError As String = "IFERROR("

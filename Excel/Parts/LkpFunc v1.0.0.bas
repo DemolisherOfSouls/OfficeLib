@@ -6,6 +6,8 @@ Option Base 1
 'Lookup Function Library
 'Version 1.0.0
 
+'Current
+
 Public Function XLIntersect(ByVal col As Variant, ByVal row As Variant)
  
   XLIntersect = Intersect(col, row)

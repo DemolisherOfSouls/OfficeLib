@@ -6,6 +6,8 @@ Option Base 1
 'Date Function Library
 'Version 1.1.0
 
+'Current
+
 Public Const DTToday As Integer = -2
 Public Const vbSaturday2 As Integer = 0
 
