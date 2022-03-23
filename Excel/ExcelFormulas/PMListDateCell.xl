@@ -1,0 +1,19 @@
+=LET(
+  datelist, FILTER(
+    CompletionLog[Date],
+    CompletionLog[Machine]=[@Machine]),
+
+  statuslist, FILTER(
+    CompletionLog[Action],
+    CompletionLog[Machine]=[@Machine]),
+
+  donelist, FILTER(
+    datelist,
+    statuslist="Done PM"),
+
+  wkend, WeekStart(MAX(donelist), 0),
+
+  err, IFERROR(wkend, ""),
+    
+  err
+)

@@ -1,0 +1,19 @@
+=LET(
+this, [@24],
+wkn,InLogTable[[#Headers],[24]],
+wk,VALUE(wkn),
+mach,VALUE($B43),
+doPM,OFFSET(PMRef,mach,wk,1,1)="M",
+code, $B43 & TEXT(wkn,"00"),
+actcode, XLOOKUP(code,PMCodeArray,PMOffCodeArray,FALSE,0,1),
+actwk, VALUE(RIGHT(actcode, 2)),
+late, COUNTIF(PMCodeArray, code) > 0,
+miss, XLOOKUP(code, CodeLog, FlagLog, TRUE) = "miss",
+good, COUNTIF(PMOffCodeArray, code) > 0,
+ugap, COUNTIF(CompletionLog[[Gap1]:[Gap8]], code) > 0,
+done, actcode=code,
+bfor, wk < WkStartMod,
+status, IFS( bfor, "bfor", good, "good", miss, "miss", late, "goal", TRUE, "----"),
+offday, IFS( done, "done", ugap, "gapp", TRUE, ""),
+
+IF(doPM, status, offday))

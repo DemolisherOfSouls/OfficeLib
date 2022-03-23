@@ -1,0 +1,19 @@
+let
+    Source = SQLGenerator(ColumnsLaborDetail, "LaborDtl", "erp", ConditionsLaborDetail),
+    Pull = SQLPull(Server, Database , Source),
+    #"Changed Type" = Table.TransformColumnTypes(Pull,{{"Company", Int64.Type}, {"ClockInDate", type date}}),
+    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each [ClockInDate] <= DateTo and [ClockInDate] >= DateFrom and [JobNum] <> "" and [Company] = Company),
+    ReOrder = Table.ReorderColumns(#"Filtered Rows",{"Company", "EmployeeNum", "LaborHedSeq", "LaborType", "LaborHrs", "LaborQty", "ResourceGrpID", "Complete", "JobNum", "ClockInDate", "ClockInTime", "OprSeq", "ClockOutTime", "Shift", "ResourceID", "OpComplete"}),
+    TimeFix = Table.TransformColumns(ReOrder,{{"ClockInTime", TimeConvert, type number}, {"ClockOutTime", TimeConvert, type number}}),
+    Transform = TableCombineDateTime(TimeFix, "ClockInDate", "ClockInTime", "ClockInDateTime"),
+    AddDate = Table.AddColumn(Transform, "Date", each Date.From([ClockInDateTime]), type date),
+    #"Duplicated Column" = Table.DuplicateColumn(AddDate, "Date", "DateOut"),
+    Custom1 = TableCombineDateTime(#"Duplicated Column", "DateOut", "ClockOutTime", "ClockOutDateTime"),
+    #"Inserted Time Subtraction" = Table.AddColumn(Custom1, "Subtraction", each if ([ClockOutDateTime] - [ClockInDateTime] > 0) then [ClockOutDateTime] - [ClockInDateTime] else [ClockOutDateTime] - [ClockInDateTime] + DateTime.From(1), type duration),
+    Grouped = Table.Group(#"Inserted Time Subtraction", {"Date", "OprSeq", "JobNum", "ResourceGrpID", "Shift", "EmployeeNum", "LaborType"}, {{"Count", each Table.RowCount(_), Int64.Type}}),
+    #"Uppercased Text" = Table.TransformColumns(Grouped,{{"JobNum", Text.Upper, type text}}),
+    #"Reordered Columns" = Table.ReorderColumns(#"Uppercased Text",{"JobNum", "Date", "OprSeq", "ResourceGrpID", "Shift", "EmployeeNum", "Count", "LaborType"}),
+    #"Grouped Rows1" = Table.Group(#"Reordered Columns", {"OprSeq", "JobNum", "ResourceGrpID", "EmployeeNum"}, {{"Punches", each List.Sum([Count]), type number}}),
+    #"Sorted Rows" = Table.Sort(#"Grouped Rows1",{{"JobNum", Order.Ascending}, {"OprSeq", Order.Ascending}})
+in
+    #"Sorted Rows"

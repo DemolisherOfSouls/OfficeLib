@@ -1,0 +1,11 @@
+=LET(
+wkn,StatusTable[[#Headers],[6]],
+wk,VALUE(wkn),
+mach,VALUE($B11),
+pm,OFFSET(PMRef,mach,wk,1,1)="M",
+code,$B11 & TEXT(wkn,"00"),
+log,XLOOKUP(code,PMCodeArray,PMFlagArray,LNF,0,1),
+disp,LEFT(log,4),
+none, IFS(WkStartMod>wk, "bfor", wk+1<ThisWeekMod,"miss",wk<ThisWeekMod, "ltms", wk=ThisWeekMod, "this", TRUE,"wait"),
+status, IF(log=LNF,none,disp),
+IF(pm,status, ""))

@@ -1,0 +1,2 @@
+CSEpicor = "Provider=SQLOLEDB;Data Source=esql.ashworth.com;Initial Catalog=Ashworth;User ID=devapp;Password=d3v@PP;"
+CSEngineer = "Provider=SQLOLEDB;Data Source=esql.ashworth.com;Initial Catalog=Engineering;User ID=Engineering;Password=Engineer2015;"

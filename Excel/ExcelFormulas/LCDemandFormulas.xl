@@ -1,0 +1,76 @@
+=LET(
+value, "[Measures].[Sum of HoursLeft]",
+week, "[DataList].[Job Due Wk#]",
+wkval, week & ".&[" & TD[@Index] & "]",
+res, "[DataList].[Resource]",
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Spring Machine (UnSched)]"), 0) +
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Spring Machine #1]"), 0) +
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Spring Machine #5]"), 0) +
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Spring Machine #9]"), 0))
+
+=LET(
+value, "[Measures].[Sum of HoursLeft]",
+week, "[DataList].[Job Due Wk#]",
+wkval, week & ".&[" & TD[@Index] & "]",
+res, "[DataList].[Resource]",
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Hand Assembly]"), 0) +
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Hand Assembly Operation]"), 0)
+
+=LET(
+value, "[Measures].[Sum of HoursLeft]",
+week, "[DataList].[Job Due Wk#]",
+wkval, week & ".&[" & CD[@Index] & "]",
+res, "[DataList].[Resource]",
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Stacker Helper]"), 0))
+
+=LET(
+value, "[Measures].[Sum of HoursLeft]",
+week, "[DataList].[Job Due Wk#]",
+wkval, week & ".&[" & CD[@Index] & "]",
+res, "[DataList].[Resource]",
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Welder #1 (LRC)]"), 0))
+
+=LET(
+value, "[Measures].[Sum of HoursLeft]",
+week, "[DataList].[Job Due Wk#]",
+wkval, week & ".&[" & CD[@Index] & "]",
+res, "[DataList].[Resource]",
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Welder #2 (Super)]"), 0))
+
+=LET(
+value, "[Measures].[Sum of HoursLeft]",
+week, "[DataList].[Job Due Wk#]",
+wkval, week & ".&[" & CD[@Index] & "]",
+res, "[DataList].[Resource]",
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Welder #3 (Omni-Pro)]"), 0))
+
+=LET(
+value, "[Measures].[Sum of HoursLeft]",
+week, "[DataList].[Job Due Wk#]",
+wkval, week & ".&[" & CD[@Index] & "]",
+res, "[DataList].[Resource]",
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Welder #4 (Dimple)]"), 0))
+
+=LET(
+value, "[Measures].[Sum of HoursLeft]",
+week, "[DataList].[Job Due Wk#]",
+wkval, week & ".&[" & CD[@Index] & "]",
+res, "[DataList].[Resource]",
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Welder #5 (Dimple)]"), 0))
+
+=LET(
+value, "[Measures].[Sum of HoursLeft]",
+week, "[DataList].[Job Due Wk#]",
+wkval, week & ".&[" & TD[@Index] & "]",
+res, "[DataList].[Resource]",
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Buttoner #1]"), 0) +
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Buttoner #3]"), 0) +
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Buttoner #4]"), 0))
+
+=LET(
+value, "[Measures].[Sum of HoursLeft]",
+week, "[DataList].[Job Due Wk#]",
+wkval, week & ".&[" & TD[@Index] & "]",
+res, "[DataList].[Resource]",
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Belt Washer]"), 0) +
+IFERROR(GETPIVOTDATA(value, PivotData, week, wkval, res, res & ".&[Grid Belt Washing]"), 0))
