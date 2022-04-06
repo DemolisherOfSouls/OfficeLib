@@ -1,0 +1,57 @@
+let
+    MBSIZE = 1024 * 1024,
+    KBSIZE = 1024,
+    BSIZE  = 1,
+    SzAssemble = (n as number, s as number, u as text) as text =>
+      Text.From(Number.Round(n / s, 2)) & " " & u,
+    Before = (t as text, d as text, i as any) as nullable text =>
+      if Text.Contains(t, d) then Text.BeforeDelimiter(t, d, i) else null,
+    SizeTxt = (n as number) as text =>
+      if n > MBSIZE then
+        SzAssemble(n, MBSIZE, "mb")
+      else if n > KBSIZE then
+        SzAssemble(n, KBSIZE, "kb")
+      else
+        SzAssemble(n, BSIZE, "b"),
+    Source = Folder.Files("X:\2. Library"),
+    lowercase = Table.TransformColumns(Source,{{"Extension", Text.Lower, type text}, {"Name", Text.Lower, type text}}),
+    fullpath = Table.AddColumn(lowercase, "FullPath", each [Folder Path] & [Name], type text),
+    expand = Table.ExpandRecordColumn(fullpath, "Attributes", {"Content Type", "Kind", "Size", "ReadOnly", "Hidden", "System", "Directory", "Archive", "Device", "Normal", "Temporary", "SparseFile", "ReparsePoint", "Compressed", "Offline", "NotContentIndexed", "Encrypted", "ChangeTime", "SymbolicLink", "MountPoint"}, {"ContentType", "Kind", "Size", "ReadOnly", "Hidden", "System", "Directory", "Archive", "Device", "Normal", "Temporary", "SparseFile", "ReparsePoint", "Compressed", "Offline", "NotContentIndexed", "Encrypted", "ChangeTime", "SymbolicLink", "MountPoint"}),
+    filter = Table.SelectRows(expand, each
+      [Extension] <> ".inf" and
+      [Extension] <> ".ini" and
+      [Extension] <> ".nfo" and
+      [Hidden] = false and
+      not Text.Contains([Folder Path], "$")),
+    remcol = Table.RemoveColumns(filter,{"MountPoint", "SymbolicLink", "Encrypted", "NotContentIndexed", "Offline", "Compressed", "ReparsePoint", "SparseFile", "Temporary", "Device", "System", "Archive", "Normal", "ReadOnly", "Hidden", "ChangeTime"}),
+    sizecol = Table.AddColumn(remcol, "Filesize", each SizeTxt([Size]), type text),
+    nameof = Table.TransformColumns(sizecol, {{"Name", each Text.BeforeDelimiter(_, ".", {0, RelativePosition.FromEnd}), type text}}),
+    index = Table.AddIndexColumn(nameof, "Index", 1, 1, Int64.Type),
+    website = Table.AddColumn(index, "Site", each (
+      if Text.Contains([Name], "xvideos")
+        then "xvideos"
+      else if Text.Contains([Name], "xxnx")
+        then "xxnx"
+      else if Text.Contains([Name], "pornhub")
+        then "pornhub"
+      else if Text.Contains([Name], "xhamster")'
+        then "xhamster"
+      else if Text.StartsWith([Name], "tumblr_")
+        then "tumblr"
+      else if Text.EndsWith([Name], "engorgedtits")
+        then "engorgedtits"
+      else null) & ".com", type text),
+    typ = Table.TransformColumnTypes(website,{{"Kind", type text}, {"Size", Int64.Type}, {"Directory", type logical}, {"ContentType", type text}, {"Site", type nullable text}}),
+    mediadate = Table.AddColumn(typ, "MediaDate", each let
+      str1 = Before([Name], "-"),
+      year1 = Number.FromText(Text.Start(str1, 4)),
+      month1 = Number.FromText(Text.Middle(str1, 4, 2)),
+      day1 = Number.FromText(Text.End(str1, 2)),
+      date1 = #date(year1, month1, day1)
+    in str1, type date),
+    clean_ext = Table.TransformColumns(mediadate, {{"Extension", each Text.AfterDelimiter(_, "."), type text}}),
+    splittyp = Table.SplitColumn(clean_ext, "ContentType", Splitter.SplitTextByEachDelimiter({"/"}, QuoteStyle.None, false), {"Type", "Spec"}),
+    chtyp = Table.TransformColumnTypes(splittyp,{{"Type", type text}, {"Spec", type text}}),
+    rescol = Table.AddColumn(chtyp, "Resolution", each if Text.Contains( [Name], "480p") then "480p" else if Text.Contains( [Name], "720p") then "720p" else if Text.Contains( [Name], "1080p") then "1080p" else if Text.Contains( [Name], "360p") then "360p" else null, type nullable text)
+in
+    rescol
