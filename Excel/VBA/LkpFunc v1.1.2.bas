@@ -4,9 +4,10 @@ Option Compare Text
 Option Base 1
 
 '`Lookup Function Library
-'Version 1.1.1
+'Version 1.1.2
 
-
+'History
+' 1.1.2 - Added XLCellLookup function
 
 'Current
 
@@ -18,6 +19,10 @@ Public Function XLEntireRow(ByVal Cell)
   XLEntireRow = Cell.EntireRow
 End Function
 
+Public Function XLCellLookup(ByVal RowCell, ByVal ColCell)
+  XLCellLookup = Intersect(RowCell.EntireRow, ColCell.EntireColumn)
+End Function
+
 Public Function XLEntireColumn(ByVal Cell)
   XLEntireColumn = Cell.EntireColumn
 End Function
@@ -25,8 +30,8 @@ End Function
 Public Function GLookup(ByRef Table, ByVal RVal, ByVal Row, ByVal CVal, ByVal Col)
   On Error GoTo Invalid
 
-  Dim r As Range: Set r = Range.Find(RVal, LookIn:=Row).EntireColumn
-  Dim C As Range: Set C = Range.Find(CVal, LookIn:=Col).EntireRow
+  Dim r As Range: Set r = r.Find(RVal, LookIn:=Row).EntireColumn
+  Dim C As Range: Set C = C.Find(CVal, LookIn:=Col).EntireRow
   
   GLookup = Intersect(r, C)
  
