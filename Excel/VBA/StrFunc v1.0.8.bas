@@ -14,7 +14,6 @@ Option Base 1
 ' 1.0.8 - Functions now accept an array of strings, as well as a normal string
 '         Removed ContainsAny, StartsWithAny, EndsWithAny, ReplaceMany
 '         Added Substitute that can accept an array, collection, dictionary, or strings
-'Current
 
 Private Const NoParam = "@@@@@"
 

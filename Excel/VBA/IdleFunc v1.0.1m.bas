@@ -3,10 +3,8 @@ Option Explicit
 Option Compare Text
 Option Base 1
 
-'Idle Timer Function Library
+'`Idle Timer Function Library
 'Version 1.0.1m
-
-'Current
 
 Private LastActive As Date
 Private WarnTime   As Date

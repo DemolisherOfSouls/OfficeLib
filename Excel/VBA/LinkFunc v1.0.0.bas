@@ -3,10 +3,8 @@ Option Explicit
 Option Compare Text
 Option Base 1
 
-'Link Generating Function Library
+'`Link Generating Function Library
 'Version - 1.0.0
-
-'Current
 
 Public Sub LinkFromContent()
 Attribute LinkFromContent.VB_ProcData.VB_Invoke_Func = "L\n14"

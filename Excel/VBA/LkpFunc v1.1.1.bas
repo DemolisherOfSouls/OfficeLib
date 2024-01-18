@@ -3,7 +3,7 @@ Option Explicit
 Option Compare Text
 Option Base 1
 
-'Lookup Function Library
+'`Lookup Function Library
 'Version 1.1.1
 
 Public Function XLIntersect(ByVal r1, ByVal r2)

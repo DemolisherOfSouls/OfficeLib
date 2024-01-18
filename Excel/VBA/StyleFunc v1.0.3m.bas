@@ -6,8 +6,6 @@ Option Base 1
 '`Style Function Library
 'Version 1.0.3m
 
-'Current
-
 Private Const DefStyle = "Normal"
 Private Const DefTitleText = "Added Title"
 

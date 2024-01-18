@@ -15,7 +15,6 @@ Option Base 1
 '         Removed ContainsAny, StartsWithAny, EndsWithAny, ReplaceMany
 '         Added Substitute that can accept an array, collection, dictionary, or strings
 ' 1.0.9 - Syntax corrections
-'Current
 
 Private Const NoParam = "@@@@@"
 

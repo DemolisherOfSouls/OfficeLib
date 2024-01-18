@@ -3,10 +3,8 @@ Option Explicit
 Option Compare Text
 Option Base 1
 
-'Style Function Library
+'`Style Function Library
 'Version 1.0.2
-
-'Current
 
 Private Const DefStyle = "Normal"
 Private Const DefTitleText = "Added Title"

@@ -1,10 +1,12 @@
-Attribute VB_Name = "DayFunc"
 Option Explicit
 Option Compare Text
 Option Base 1
 
-'Date Function Library
-'Version 1.1.1
+'`Date Function Library
+'Version 1.1.2
+
+'History
+' 1.1.2 - Added Optional Base7 Parameter to DayStr
 
 'Current
 
@@ -23,12 +25,12 @@ Invalid:
 End Function
 
 
-Public Function DayCode(Optional ByVal datenumber = DTToday, Optional ByVal Base7 As Boolean = False) As Integer
+Public Function DayCode(Optional ByVal datenumber = DTToday, Optional ByVal base7 As Boolean = False) As Integer
 
   If datenumber = DTToday Then datenumber = Date
   If datenumber < 0 Then GoTo Invalid
   
-  DayCode = IIf(Base7 And Int(datenumber) Mod 7 = vbSaturday2, vbSaturday, Int(datenumber) Mod 7)
+  DayCode = IIf(base7 And Int(datenumber) Mod 7 = vbSaturday2, vbSaturday, Int(datenumber) Mod 7)
 Exit Function
   
 Invalid:
@@ -59,12 +61,12 @@ Invalid:
   WeekFrom = CVErr(xlErrValue)
 End Function
 
-Public Function DayStr(Optional ByVal datenumber = DTToday) As String
+Public Function DayStr(Optional ByVal datenumber = DTToday, Optional ByVal base7 = False) As String
   
   If datenumber = DTToday Then datenumber = Date
   If datenumber < 0 Then GoTo Invalid
  
-  DayStr = WeekdayName(DayCode(datenumber))
+  DayStr = WeekdayName(DayCode(datenumber, base7))
 Exit Function
   
 Invalid:

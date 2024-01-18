@@ -3,7 +3,7 @@ Option Explicit
 Option Compare Text
 Option Base 1
 
-'Style Function Library
+'`Style Function Library
 'Version 1.0.5
 
 Private Const DefStyle = "Normal"
