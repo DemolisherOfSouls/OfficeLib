@@ -3,8 +3,11 @@ Option Explicit
 Option Compare Text
 Option Base 1
 
-'Error Handling Function Library
+'`Error Handling Function Library
 'Version 1.0.1
+
+'History
+' 1.0.1 - Changed vbOKOnly to vbExclamation
 
 'Current
 

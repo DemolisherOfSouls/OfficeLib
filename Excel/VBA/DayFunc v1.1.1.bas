@@ -3,10 +3,8 @@ Option Explicit
 Option Compare Text
 Option Base 1
 
-'Date Function Library
+'`Date Function Library
 'Version 1.1.1
-
-'Current
 
 Public Const DTToday As Integer = -2
 Public Const vbSaturday2 As Integer = 0
