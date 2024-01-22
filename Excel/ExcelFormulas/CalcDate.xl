@@ -1,0 +1,11 @@
+=SWITCH([@[Exp. Code]],
+"CurBal", TODAY(),
+"Daily", TODAY() + COUNT(FILTER([Row],([Row] < [@Row]) * ([Exp. Code] = "Daily"), "First")),
+"Rent7", WeekStart(TODAY(),6) + COUNT(FILTER([Row],([Row] < [@Row]) * ([Exp. Code] = "Rent7"), "First")) * 7,
+"Pay40", WeekStart(TODAY(),3) + COUNT(FILTER([Row],([Row] < [@Row]) * (LEFT([Exp. Code], 3) = "Pay"), "First")) * 7,
+"CarPmt", LET(
+   cnt, COUNT(FILTER([Row],([Row] < [@Row]) * ([Exp. Code] = "CarPmt"))),
+   due, DATE(YEAR(TODAY()),MONTH(TODAY()), 6),
+   duePN, DATE(YEAR(TODAY()),MONTH(TODAY()) + cnt, 6),
+   duePN1, DATE(YEAR(TODAY()),MONTH(TODAY()) + cnt + 1, 6),
+   IF(due < TODAY(), duePN1, duePN)))
