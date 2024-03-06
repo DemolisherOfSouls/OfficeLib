@@ -1,0 +1,13 @@
+=SWITCH([@[Exp. Code]],
+"CurBal", TODAY(),
+"Daily", TODAY() + COUNTIFS([Row], "<"&[@Row], [Exp. Code], "Daily"),
+"Rent7", WeekStart(TODAY(),6) + COUNTIFS([Row], "<"&[@Row], [Exp. Code], "Rent7") * 7,
+"Pay40", WeekStart(TODAY(),3) + COUNT(FILTER([Row],([Row] < [@Row]) * (LEFT([Exp. Code], 3) = "Pay"), "First")) * 7,
+"TransSav", WeekStart(TODAY(),5) + COUNT(FILTER([Row],([Row] < [@Row]) * ([Exp. Code] = "TransSav"), "First")) * 7,
+"CarPmt", NextMonthOn(6, COUNT(FILTER([Row],([Row] < [@Row]) * ([Exp. Code] = "CarPmt"))) + 1),
+"Phone", NextMonthOn(6, COUNT(FILTER([Row],([Row] < [@Row]) * ([Exp. Code] = "Phone"))) + 1),
+"Hulu", NextMonthOn(8, COUNT(FILTER([Row],([Row] < [@Row]) * ([Exp. Code] = "Hulu"))) + 1),
+"Spotify", NextMonthOn(15, COUNT(FILTER([Row],([Row] < [@Row]) * ([Exp. Code] = "Spotify"))) + 1),
+"CarIns", NextMonthOn(25, COUNT(FILTER([Row],([Row] < [@Row]) * ([Exp. Code] = "CarIns"))) + 1),
+"XboxGP", NextMonthOn(5, COUNT(FILTER([Row],([Row] < [@Row]) * ([Exp. Code] = "XboxGP"))) + 1),
+"CSRp125", BorrowRepayDate, "")
